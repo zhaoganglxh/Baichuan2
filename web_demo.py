@@ -11,17 +11,21 @@ st.title("Baichuan 2")
 
 @st.cache_resource
 def init_model():
+
+    model_path = "J:/HuggingFace/models/baichuan-inc/Baichuan2-7B-Chat"
+    model_name = "baichuan-inc/Baichuan2-7B-Chat"
+
     model = AutoModelForCausalLM.from_pretrained(
-        "baichuan-inc/Baichuan2-13B-Chat",
+        model_path,
         torch_dtype=torch.float16,
         device_map="auto",
         trust_remote_code=True
-    )
+    ).cuda()
     model.generation_config = GenerationConfig.from_pretrained(
-        "baichuan-inc/Baichuan2-13B-Chat"
+        model_name
     )
     tokenizer = AutoTokenizer.from_pretrained(
-        "baichuan-inc/Baichuan2-13B-Chat",
+        model_path,
         use_fast=False,
         trust_remote_code=True
     )
